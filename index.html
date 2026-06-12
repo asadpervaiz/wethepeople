@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We The People</title>
+
+  <style>
+    /* ── FONTS ── */
+    @font-face {
+      font-family: 'NHaasGrotesk';
+      src: url('fonts/NHaasGroteskDSPro-75Bd.otf') format('opentype');
+      font-weight: 700; font-style: normal;
+    }
+    @font-face {
+      font-family: 'NHaasGrotesk';
+      src: url('fonts/NHaasGroteskDSPro-76BdIt.otf') format('opentype');
+      font-weight: 700; font-style: italic;
+    }
+    @font-face {
+      font-family: 'Liberator';
+      src: url('fonts/LiberatorWTP-Heavy.otf') format('opentype');
+      font-weight: 900;
+    }
+    @font-face {
+      font-family: 'DxGotha';
+      src: url('fonts/Dx Gotha.otf') format('opentype');
+      font-weight: 400;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'NHaasGrotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE TOGGLE ── */
+    #lang-toggle {
+      position: fixed; bottom: 20px; right: 20px; z-index: 999;
+      background: #000; color: #fff; border: none;
+      font-family: 'NHaasGrotesk', sans-serif;
+      font-weight: 700; font-size: 12px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 10px 18px; cursor: pointer; transition: opacity 0.15s;
+    }
+    #lang-toggle:hover { background: #faeb50; color: #000000; }
+
+    /* ── HEADLINE TYPE ── */
+    .headline {
+      font-family: 'Liberator', 'Arial Black', sans-serif;
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: 0.04em; line-height: 1;
+      word-break: normal; overflow-wrap: normal; hyphens: none;
+    }
+    .gotha-letter {
+      font-family: 'DxGotha', serif;
+      font-size: 0.9em; display: inline;
+    }
+
+    /* ── SECTIONS ── */
+    section { width: 100%; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      padding: 6vw 6vw 80px;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #hero-logo-text {
+      display: flex; flex-direction: column; gap: 0; width: 100%;
+    }
+    .logo-word {
+      font-family: 'Liberator', 'Arial Black', sans-serif;
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: 0.04em; line-height: 0.88;
+      font-size: clamp(92px, 18.4vw, 253px);
+      display: block; width: 100%;
+      word-break: normal; overflow-wrap: normal; hyphens: none;
+    }
+
+    .hero-bottom { display: flex; flex-direction: column; gap: 16px; }
+    .hero-tagline { font-size: clamp(21.6px, 3.12vw, 48px); line-height: 1.05; }
+    .hero-info { display: flex; flex-direction: column; gap: 4px; }
+    .hero-info-line { font-size: clamp(18px, 2.16vw, 33.6px); }
+    .hero-location {
+      display: inline-block;
+      font-family: 'NHaasGrotesk', sans-serif; font-weight: 700;
+      font-size: clamp(14.4px, 1.56vw, 20.4px);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; color: inherit;
+      border-bottom: 2px solid currentColor;
+      padding-bottom: 1px; transition: color 0.15s;
+      align-self: flex-start;
+    }
+
+    /* Hero & footer hover → white */
+    #hero a:hover, #hero button:hover   { color: #ffffff !important; opacity: 1 !important; }
+    #footer a:hover, #footer button:hover { color: #ffffff !important; opacity: 1 !important; }
+
+    /* ── ABOUT ── */
+    #about { padding: 120px 6vw; }
+    #about p { font-size: clamp(20px, 2.8vw, 38px); line-height: 1.5; max-width: 1000px; }
+
+    /* ── SHARED SECTION HEADING ── */
+    .section-heading {
+      font-size: clamp(50px, 9vw, 135px);
+      line-height: 0.88; margin-bottom: 64px;
+      word-break: normal; overflow-wrap: normal; hyphens: none;
+    }
+
+    /* ── PROGRAMMING ── */
+    #events { padding: 120px 6vw; }
+    .events-body {
+      font-size: clamp(17px, 1.9vw, 26px);
+      line-height: 1.65; max-width: 780px; margin-bottom: 64px;
+    }
+    .events-cta {
+      display: inline-block;
+      font-family: 'Liberator', sans-serif;
+      font-size: clamp(18px, 2.2vw, 32px);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      text-decoration: none; color: inherit;
+      border: 3px solid currentColor;
+      padding: 22px 44px; transition: color 0.15s;
+    }
+
+    /* ── PHOTOS ── */
+    #photos { padding: 120px 6vw; }
+    .carousel-wrapper { overflow: hidden; position: relative; }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .carousel-slide {
+      min-width: 100%; aspect-ratio: 4/3;
+      background: rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase;
+      overflow: hidden;
+    }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-controls {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-top: 20px;
+    }
+    .carousel-dots { display: flex; gap: 8px; align-items: center; }
+    .carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: currentColor; opacity: 0.3;
+      cursor: pointer; border: none; transition: background 0.2s, opacity 0.2s; padding: 0;
+    }
+    .carousel-dot.active { opacity: 1; }
+    .carousel-arrows { display: flex; gap: 10px; }
+    .carousel-btn {
+      background: none; border: 2px solid currentColor; color: inherit;
+      font-size: 18px; width: 48px; height: 48px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s;
+    }
+
+    /* ── ARTISTS ── */
+    #artists { padding: 120px 6vw; }
+    .artists-flow { font-size: clamp(18px, 2.2vw, 30px); line-height: 1.75; max-width: 1100px; }
+    .artist-sep { margin: 0 8px; }
+
+    /* ── PRESS ── */
+    #press { padding: 120px 6vw; }
+    .press-list { display: flex; flex-direction: column; }
+    .press-item {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; padding: 28px 0;
+      border-top: 1.5px solid currentColor;
+      text-decoration: none; color: inherit;
+      gap: 24px; transition: color 0.15s;
+    }
+    .press-item:last-child { border-bottom: 1.5px solid currentColor; }
+    .press-outlet {
+      font-size: clamp(18px, 2.2vw, 28px);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .press-headline { font-size: 14px; letter-spacing: 0.03em; margin-top: 5px; }
+    .press-arrow { font-size: 22px; }
+
+    /* ── FOOTER ── */
+    #footer {
+      padding: 100px 6vw 60px;
+      display: flex; flex-direction: column;
+      align-items: flex-start; gap: 64px;
+    }
+
+    #footer-logo-text {
+      display: flex; flex-direction: column; gap: 0;
+      width: clamp(200px, 38vw, 480px);
+      align-self: center;
+    }
+    .footer-logo-word {
+      font-family: 'Liberator', 'Arial Black', sans-serif;
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: 0.04em; line-height: 0.88;
+      font-size: clamp(50.6px, 9.2vw, 126.5px);
+      display: block; width: 100%;
+      word-break: normal; overflow-wrap: normal; hyphens: none;
+    }
+
+    .footer-presented-block {
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center; width: 100%;
+    }
+    .footer-presented-label {
+      font-size: 11px; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 20px; display: block;
+    }
+    .footer-partners {
+      display: flex; align-items: center;
+      justify-content: center; gap: 48px; flex-wrap: wrap;
+    }
+    .footer-partner-logo { height: 192px; width: auto; object-fit: contain; }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; flex-wrap: wrap;
+      gap: 28px; padding-top: 48px;
+      border-top: 1.5px solid currentColor; width: 100%;
+    }
+    .footer-dates {
+      font-size: 13px; letter-spacing: 0.12em;
+      text-transform: uppercase; line-height: 1.9;
+    }
+    .social-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none; color: inherit; font-weight: 700;
+      font-size: clamp(15px, 1.8vw, 20px);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      border-bottom: 2px solid currentColor;
+      padding-bottom: 2px; transition: color 0.15s;
+    }
+
+    /* Footer credit — always solid black, no opacity */
+    .footer-credit {
+      font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #000000 !important;
+      opacity: 1 !important;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      #hero    { padding: 5vw 5vw 60px; }
+
+      /* Sections 2–6: 72px + 15% = 82.8px */
+      #about   { padding: 82.8px 5vw; }
+      #events  { padding: 82.8px 5vw; }
+      #photos  { padding: 82.8px 5vw; }
+      #artists { padding: 82.8px 5vw; }
+      #press   { padding: 82.8px 5vw; }
+
+      /* Footer top: 60px + 15% = 69px */
+      #footer  { padding: 69px 5vw 60px; }
+
+      .press-item    { grid-template-columns: 1fr; }
+      .press-arrow   { display: none; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+      /* Logo: 5% smaller than previous mobile size */
+      .logo-word { font-size: 125.86px; }
+
+      /* Footer logo matches section 1 logo at mobile */
+      #footer-logo-text { width: 100%; align-self: flex-start; }
+      .footer-logo-word { font-size: 125.86px; }
+
+      /* General type scale +20% */
+      .section-heading        { font-size: 60px; }      /* 50 * 1.2 */
+      #about p                { font-size: 24px; }      /* 20 * 1.2 */
+      .events-body            { font-size: 20.4px; }    /* 17 * 1.2 */
+      .events-cta             { font-size: 21.6px; }    /* 18 * 1.2 */
+      .artists-flow           { font-size: 21.6px; }    /* 18 * 1.2 */
+      .press-outlet           { font-size: 21.6px; }    /* 18 * 1.2 */
+      .press-headline         { font-size: 16.8px; }    /* 14 * 1.2 */
+      .social-link            { font-size: 18px; }      /* 15 * 1.2 */
+      .footer-dates           { font-size: 15.6px; }    /* 13 * 1.2 */
+      .footer-presented-label { font-size: 13.2px; }    /* 11 * 1.2 */
+      .footer-credit          { font-size: 13.2px; }    /* 11 * 1.2 */
+
+      /* Section 1 text below logo: base 20% + additional 20% = 44% bigger than desktop */
+      .hero-tagline    { font-size: 25.92px; }   /* 18 * 1.44 */
+      .hero-info-line  { font-size: 21.6px; }    /* 15 * 1.44 */
+      .hero-location   { font-size: 17.28px; }   /* 12 * 1.44 */
+    }
+  </style>
+</head>
+<body>
+
+  <button id="lang-toggle">ES</button>
+
+  <!-- ── HERO (section 1) ── -->
+  <section id="hero">
+    <div id="hero-logo-text">
+      <span class="logo-word" id="logo-we"></span>
+      <span class="logo-word" id="logo-the"></span>
+      <span class="logo-word" id="logo-people"></span>
+    </div>
+    <div class="hero-bottom">
+      <div>
+        <div class="hero-tagline headline" id="ht1"></div>
+        <div class="hero-tagline headline" id="ht2"></div>
+      </div>
+      <div class="hero-info">
+        <div class="hero-info-line headline" id="hdates1"></div>
+        <div class="hero-info-line headline" id="hdates2"></div>
+        <div class="hero-info-line headline" id="hfree"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
+        <a class="hero-location" href="https://maps.app.goo.gl/MQTvvDd1P87K1Htz5" target="_blank" rel="noopener" id="hloc"></a>
+        <a class="hero-location" href="https://instagram.com/wethepeoplesouthla" target="_blank" rel="noopener" id="hero-instagram"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT (section 2) ── -->
+  <section id="about">
+    <p id="about-text"></p>
+  </section>
+
+  <!-- ── PROGRAMMING (section 3) ── -->
+  <section id="events">
+    <div class="section-heading headline" id="events-heading"></div>
+    <p class="events-body" id="events-text"></p>
+    <a class="events-cta" href="#" target="_blank" rel="noopener" id="events-cta"></a>
+  </section>
+
+  <!-- ── PHOTOS (section 4) ── -->
+  <section id="photos">
+    <div class="section-heading headline" id="photos-heading"></div>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-slide">Photo 1 — Placeholder</div>
+        <div class="carousel-slide">Photo 2 — Placeholder</div>
+        <div class="carousel-slide">Photo 3 — Placeholder</div>
+        <div class="carousel-slide">Photo 4 — Placeholder</div>
+        <div class="carousel-slide">Photo 5 — Placeholder</div>
+        <div class="carousel-slide">Photo 6 — Placeholder</div>
+        <div class="carousel-slide">Photo 7 — Placeholder</div>
+        <div class="carousel-slide">Photo 8 — Placeholder</div>
+        <div class="carousel-slide">Photo 9 — Placeholder</div>
+        <div class="carousel-slide">Photo 10 — Placeholder</div>
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <div class="carousel-arrows">
+        <button class="carousel-btn" id="prev-btn">&#8592;</button>
+        <button class="carousel-btn" id="next-btn">&#8594;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ARTISTS (section 5) ── -->
+  <section id="artists">
+    <div class="section-heading headline" id="artists-heading"></div>
+    <div class="artists-flow">
+      <span>Adrian Armstrong</span><span class="artist-sep">/</span>
+      <span>Alicia Piller</span><span class="artist-sep">/</span>
+      <span>Anthony Akinbola</span><span class="artist-sep">/</span>
+      <span>Cash Cooper</span><span class="artist-sep">/</span>
+      <span>Danie Cansino</span><span class="artist-sep">/</span>
+      <span>Esteban Raheem Abdul Raheem Samayoa</span><span class="artist-sep">/</span>
+      <span>Ferrari Sheppard</span><span class="artist-sep">/</span>
+      <span>Genevieve Gaignard</span><span class="artist-sep">/</span>
+      <span>Glen Wilson</span><span class="artist-sep">/</span>
+      <span>Glen Hardy Jr.</span><span class="artist-sep">/</span>
+      <span>Greg Ito</span><span class="artist-sep">/</span>
+      <span>Hasef</span><span class="artist-sep">/</span>
+      <span>Hedy Torres</span><span class="artist-sep">/</span>
+      <span>Helina Metaferia</span><span class="artist-sep">/</span>
+      <span>HRDWRKR</span><span class="artist-sep">/</span>
+      <span>John Simmons</span><span class="artist-sep">/</span>
+      <span>Jonah Elijah</span><span class="artist-sep">/</span>
+      <span>Kayla B. Miller</span><span class="artist-sep">/</span>
+      <span>Keith Brown</span><span class="artist-sep">/</span>
+      <span>Kimberly Robertson (Mvskoke), Ph.D.</span><span class="artist-sep">/</span>
+      <span>Kwame Braithwaite</span><span class="artist-sep">/</span>
+      <span>Kyungmi Shin</span><span class="artist-sep">/</span>
+      <span>Lex Marie</span><span class="artist-sep">/</span>
+      <span>Malaika Jules</span><span class="artist-sep">/</span>
+      <span>Mohammed Mubarak</span><span class="artist-sep">/</span>
+      <span>Patrick Martinez</span><span class="artist-sep">/</span>
+      <span>Patrisse Cullors</span><span class="artist-sep">/</span>
+      <span>Perez Brothers</span><span class="artist-sep">/</span>
+      <span>Raven Varona</span><span class="artist-sep">/</span>
+      <span>Sam Pace</span><span class="artist-sep">/</span>
+      <span>Teresa Flores</span><span class="artist-sep">/</span>
+      <span>Terrick Gutierrez</span>
+    </div>
+  </section>
+
+  <!-- ── PRESS (section 6) ── -->
+  <section id="press">
+    <div class="section-heading headline" id="press-heading"></div>
+    <div class="press-list">
+      <a class="press-item" href="#" target="_blank" rel="noopener">
+        <div>
+          <div class="press-outlet" id="press-1-outlet"></div>
+          <div class="press-headline" id="press-1-headline"></div>
+        </div>
+        <span class="press-arrow">↗</span>
+      </a>
+      <a class="press-item" href="#" target="_blank" rel="noopener">
+        <div>
+          <div class="press-outlet" id="press-2-outlet"></div>
+          <div class="press-headline" id="press-2-headline"></div>
+        </div>
+        <span class="press-arrow">↗</span>
+      </a>
+      <a class="press-item" href="#" target="_blank" rel="noopener">
+        <div>
+          <div class="press-outlet" id="press-3-outlet"></div>
+          <div class="press-headline" id="press-3-headline"></div>
+        </div>
+        <span class="press-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER (section 7) ── -->
+  <section id="footer">
+    <div id="footer-logo-text">
+      <span class="footer-logo-word" id="footer-logo-we"></span>
+      <span class="footer-logo-word" id="footer-logo-the"></span>
+      <span class="footer-logo-word" id="footer-logo-people"></span>
+    </div>
+    <div class="footer-presented-block">
+      <span class="footer-presented-label" id="footer-presented"></span>
+      <div class="footer-partners">
+        <a href="https://cocosouthla.org/" target="_blank" rel="noopener">
+          <img class="footer-partner-logo" src="images/partnerlogo-1.png" alt="Community Coalition" />
+        </a>
+        <a href="https://sankofa.org/" target="_blank" rel="noopener">
+          <img class="footer-partner-logo" src="images/partnerlogo-2.png" alt="Sankofa.org" />
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-dates" id="footer-dates"></div>
+      <a class="social-link" href="https://instagram.com/wethepeoplesouthla" target="_blank" rel="noopener" id="footer-instagram"></a>
+    </div>
+    <p class="footer-credit" id="footer-credit"></p>
+  </section>
+
+
+  <script>
+    /* ══════════════════════════════════════════════
+       COLOR SYSTEM
+    ══════════════════════════════════════════════ */
+    const HF_COLORS = ['#917dff','#f5c83c','#f02424','#faaf41','#32824b'];
+
+    const MID_PALETTE = {
+      '#f02424': ['#5a0055','#732814'],
+      '#8c286e': ['#f05a23','#f5c83c','#f02424','#fa96aa'],
+      '#32824b': ['#faeb50','#f5c83c','#64b9d2','#fa96aa','#faaf41'],
+      '#f05a23': ['#5a0055','#23145a'],
+      '#2d328c': ['#fa96aa','#9cc87d','#faaf41'],
+      '#732814': ['#f5c83c','#fa96aa','#f02424','#f05a23'],
+      '#144120': ['#64b9d2','#f5c83c','#fa96aa'],
+      '#fa96aa': ['#732814','#2d328c','#f05a23'],
+    };
+    const MID_BG_POOL = Object.keys(MID_PALETTE);
+
+    const sectionColors = {};
+
+    function randFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    const COLOR_CONFLICTS = { '#f02424': ['#f05a23'], '#f05a23': ['#f02424'] };
+
+    function pickExcluding(pool, ...exclude) {
+      const toExclude = new Set(exclude);
+      exclude.forEach(c => { if (COLOR_CONFLICTS[c]) COLOR_CONFLICTS[c].forEach(x => toExclude.add(x)); });
+      const available = pool.filter(c => !toExclude.has(c));
+      return available.length ? randFrom(available) : randFrom(pool);
+    }
+
+    function applyColors() {
+      const heroBg   = randFrom(HF_COLORS);
+      const footerBg = pickExcluding(HF_COLORS, heroBg);
+
+      document.getElementById('hero').style.backgroundColor   = heroBg;
+      document.getElementById('hero').style.color             = '#000000';
+      document.getElementById('footer').style.backgroundColor = footerBg;
+      document.getElementById('footer').style.color           = '#000000';
+
+      const midIds = ['about','events','photos','artists','press'];
+      const midBgs = [];
+
+      midIds.forEach((id, i) => {
+        const prevBg = i === 0 ? heroBg : midBgs[i - 1];
+        const nextBg = i === midIds.length - 1 ? footerBg : null;
+        const bg = nextBg
+          ? pickExcluding(MID_BG_POOL, prevBg, nextBg)
+          : pickExcluding(MID_BG_POOL, prevBg);
+        midBgs.push(bg);
+
+        const fgOptions  = MID_PALETTE[bg];
+        const fg         = randFrom(fgOptions);
+        const alts       = fgOptions.filter(c => c !== fg);
+        const hoverColor = alts.length ? randFrom(alts) : fg;
+
+        sectionColors[id] = { fg, fgOptions, hoverColor };
+
+        const el = document.getElementById(id);
+        el.style.backgroundColor = bg;
+        el.style.color = fg;
+      });
+    }
+
+    applyColors();
+
+    /* ── Hover for sections 2–6: switch to paired palette color ── */
+    function setupMidHover() {
+      Object.entries(sectionColors).forEach(([sectionId, { hoverColor }]) => {
+        const section = document.getElementById(sectionId);
+        section.querySelectorAll('a, button').forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            el.style.color = hoverColor;
+            el.style.opacity = '1';
+          });
+          el.addEventListener('mouseleave', () => {
+            el.style.color = '';
+            el.style.opacity = '';
+          });
+        });
+      });
+    }
+
+    setupMidHover();
+
+
+    /* ══════════════════════════════════════════════
+       DX GOTHA LETTER SWAP
+    ══════════════════════════════════════════════ */
+    const EXCLUDED = new Set('FHJKMNQUVY'.split(''));
+
+    function mixedHeadline(text) {
+      return text.split(' ').map(word => {
+        const eligible = [];
+        for (let i = 0; i < word.length; i++) {
+          const ch = word[i].toUpperCase();
+          if (/[A-Z]/.test(ch) && !EXCLUDED.has(ch)) eligible.push(i);
+        }
+        if (!eligible.length) return word;
+        const idx = eligible[Math.floor(Math.random() * eligible.length)];
+        return word.slice(0, idx)
+          + `<span class="gotha-letter">${word[idx]}</span>`
+          + word.slice(idx + 1);
+      }).join(' ');
+    }
+
+    function randomAlignments() {
+      let aligns;
+      do {
+        aligns = [0,1,2].map(() => Math.random() < 0.5 ? 'left' : 'right');
+      } while (aligns[0] === aligns[1]);
+      return aligns;
+    }
+
+    function buildHeroLogo() {
+      const words  = ['WE','THE','PEOPLE'];
+      const ids    = ['logo-we','logo-the','logo-people'];
+      const aligns = randomAlignments();
+      ids.forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.innerHTML = mixedHeadline(words[i]);
+        el.style.textAlign = aligns[i];
+      });
+    }
+
+    function buildFooterLogo() {
+      const words  = ['WE','THE','PEOPLE'];
+      const ids    = ['footer-logo-we','footer-logo-the','footer-logo-people'];
+      const aligns = randomAlignments();
+      ids.forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.innerHTML = mixedHeadline(words[i]);
+        el.style.textAlign = aligns[i];
+      });
+    }
+
+    buildHeroLogo();
+    buildFooterLogo();
+
+
+    /* ══════════════════════════════════════════════
+       TRANSLATIONS
+    ══════════════════════════════════════════════ */
+    const T = {
+      en: {
+        'about-text':       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+        'events-text':      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo. Duis aute irure dolor in reprehenderit.',
+        'events-cta':       'View All Events ↗',
+        'hloc':             'At LADC Studios',
+        'hero-instagram':   '@wethepeoplesouthla',
+        'footer-presented': 'Presented by',
+        'footer-dates':     'July 2–19, 2026<br>Open Thursdays–Sundays<br>Free',
+        'footer-instagram': '@wethepeoplesouthla ↗',
+        'footer-credit':    '© 2026 We The People Exhibition',
+        'press-1-outlet':   'Lorem Ipsum Publication',
+        'press-1-headline': '"Lorem ipsum dolor sit amet, consectetur adipiscing elit"',
+        'press-2-outlet':   'Dolor Sit Magazine',
+        'press-2-headline': '"Ut enim ad minim veniam, quis nostrud exercitation ullamco"',
+        'press-3-outlet':   'Adipiscing Arts Review',
+        'press-3-headline': '"Duis aute irure dolor in reprehenderit in voluptate velit esse"',
+        'events-heading':   'Programming',
+        'photos-heading':   'Exhibition Space',
+        'artists-heading':  'Artists',
+        'press-heading':    'Press',
+        'ht1':    'An Exhibit at the Intersection',
+        'ht2':    'of Art, Memory, and Movement',
+        'hdates1':'July 2nd–19th',
+        'hdates2':'Thursdays through Sundays',
+        'hfree':  'Free and Open to the People',
+        'lang-toggle': 'ES',
+      },
+      es: {
+        'about-text':       'Lorem ipsum en español dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
+        'events-text':      'Lorem ipsum en español dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+        'events-cta':       'Ver Todos los Eventos ↗',
+        'hloc':             'En LADC Studios',
+        'hero-instagram':   '@wethepeoplesouthla',
+        'footer-presented': 'Presentado por',
+        'footer-dates':     '2–19 de julio, 2026<br>Abierto Jueves–Domingos<br>Gratis',
+        'footer-instagram': '@wethepeoplesouthla ↗',
+        'footer-credit':    '© 2026 We The People Exhibition',
+        'press-1-outlet':   'Lorem Ipsum Publicación',
+        'press-1-headline': '"Lorem ipsum dolor sit amet, consectetur adipiscing elit"',
+        'press-2-outlet':   'Dolor Sit Revista',
+        'press-2-headline': '"Ut enim ad minim veniam, quis nostrud exercitation ullamco"',
+        'press-3-outlet':   'Adipiscing Arts Reseña',
+        'press-3-headline': '"Duis aute irure dolor in reprehenderit in voluptate velit esse"',
+        'events-heading':   'Programación',
+        'photos-heading':   'Espacio de Exposición',
+        'artists-heading':  'Artistas',
+        'press-heading':    'Prensa',
+        'ht1':    'Una Exposición en la Intersección',
+        'ht2':    'del Arte, la Memoria y el Movimiento',
+        'hdates1':'2–19 de Julio',
+        'hdates2':'Jueves a Domingos',
+        'hfree':  'Gratuito y Abierto al Pueblo',
+        'lang-toggle': 'EN',
+      }
+    };
+
+    const HEADLINE_IDS  = ['events-heading','photos-heading','artists-heading','press-heading'];
+    const LIBERATOR_IDS = ['ht1','ht2','hdates1','hdates2','hfree'];
+    const PLAIN_IDS     = ['about-text','events-text','events-cta','hloc','hero-instagram','footer-presented','footer-dates','footer-instagram','footer-credit','press-1-outlet','press-1-headline','press-2-outlet','press-2-headline','press-3-outlet','press-3-headline','lang-toggle'];
+
+    let lang = 'en';
+
+    function render(l) {
+      PLAIN_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && T[l][id] !== undefined) el.innerHTML = T[l][id];
+      });
+      LIBERATOR_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && T[l][id] !== undefined) el.textContent = T[l][id].toUpperCase();
+      });
+      HEADLINE_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && T[l][id] !== undefined) el.innerHTML = mixedHeadline(T[l][id]);
+      });
+    }
+
+    render(lang);
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      lang = lang === 'en' ? 'es' : 'en';
+      render(lang);
+    });
+
+
+    /* ══════════════════════════════════════════════
+       CAROUSEL
+       Dots inherit section fg color; active dot
+       uses the section's hover color.
+    ══════════════════════════════════════════════ */
+    const track  = document.getElementById('carousel-track');
+    const dotsEl = document.getElementById('carousel-dots');
+    const slides = track.querySelectorAll('.carousel-slide');
+    let cur = 0, timer;
+
+    const photoColors = sectionColors['photos'] || {};
+    const dotFg       = photoColors.fg || 'currentColor';
+    const dotHoverFg  = photoColors.hoverColor || dotFg;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', `Slide ${i + 1}`);
+      d.style.background = i === 0 ? dotHoverFg : dotFg;
+      d.style.opacity = i === 0 ? '1' : '0.3';
+      d.addEventListener('click', () => { goTo(i); resetTimer(); });
+      dotsEl.appendChild(d);
+    });
+
+    function goTo(n) {
+      cur = (n + slides.length) % slides.length;
+      track.style.transform = `translateX(-${cur * 100}%)`;
+      dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        const isActive = i === cur;
+        d.classList.toggle('active', isActive);
+        d.style.background = isActive ? dotHoverFg : dotFg;
+        d.style.opacity    = isActive ? '1' : '0.3';
+      });
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => { goTo(cur - 1); resetTimer(); });
+    document.getElementById('next-btn').addEventListener('click', () => { goTo(cur + 1); resetTimer(); });
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(cur + 1), 5000);
+    }
+    resetTimer();
+  </script>
+</body>
+</html>
