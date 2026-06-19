@@ -3,7 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>We The People</title>
+  <title>We The People — An Art Exhibition | Los Angeles, July 2–19, 2026</title>
+  <meta name="description" content="We The People is a free art exhibition at LADC Studios in South Los Angeles, open July 2–19, 2026. Featuring 32 artists exploring democracy, justice, and community through art, culture, and grassroots organizing." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://wethepeoplesouthla.com" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wethepeoplesouthla.com" />
+  <meta property="og:title" content="We The People — An Art Exhibition | Los Angeles, July 2–19, 2026" />
+  <meta property="og:description" content="We The People is a free art exhibition at LADC Studios in South Los Angeles, open July 2–19, 2026. Featuring 32 artists exploring democracy, justice, and community through art, culture, and grassroots organizing." />
+  <meta property="og:image" content="https://wethepeoplesouthla.com/images/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="We The People — An Art Exhibition | Los Angeles, July 2–19, 2026" />
+  <meta name="twitter:description" content="A free art exhibition at LADC Studios, South Los Angeles. July 2–19, 2026." />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ExhibitionEvent",
+    "name": "We The People",
+    "description": "We The People is a free art exhibition centering the voices, stories, and creative expressions of those left out of the American narrative, featuring 32 artists exploring democracy, justice, and community.",
+    "url": "https://wethepeoplesouthla.com",
+    "startDate": "2026-07-02",
+    "endDate": "2026-07-19",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "isAccessibleForFree": true,
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday","Friday"], "opens": "13:00", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:00", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:00", "closes": "19:00" }
+    ],
+    "location": {
+      "@type": "Place",
+      "name": "LADC Studios",
+      "address": { "@type": "PostalAddress", "addressLocality": "Los Angeles", "addressRegion": "CA", "addressCountry": "US" }
+    },
+    "organizer": [
+      { "@type": "Organization", "name": "Community Coalition", "url": "https://cocosouthla.org" },
+      { "@type": "Organization", "name": "Sankofa.org", "url": "https://sankofa.org" }
+    ]
+  }
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCQZM6MKHD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DCQZM6MKHD');
+  </script>
 
   <style>
     /* ── FONTS ── */
@@ -43,7 +95,10 @@
       font-family: 'NHaasGrotesk', sans-serif;
       font-weight: 700; font-size: 12px;
       letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 10px 18px; cursor: pointer; transition: opacity 0.15s;
+      padding: 10px 18px; cursor: pointer; transition: background 0.15s, color 0.15s;
+      -webkit-transform: translateZ(0); transform: translateZ(0);
+      -webkit-backface-visibility: hidden; backface-visibility: hidden;
+      will-change: transform;
     }
     #lang-toggle:hover { background: #faeb50; color: #000000; }
 
@@ -330,7 +385,7 @@
   <section id="events">
     <div class="section-heading headline" id="events-heading"></div>
     <p class="events-body" id="events-text"></p>
-    <a class="events-cta" href="#" target="_blank" rel="noopener" id="events-cta"></a>
+    <a class="events-cta" href="https://www.mobilize.us/cocosouthla/" target="_blank" rel="noopener" id="events-cta"></a>
   </section>
 
   <!-- ── PHOTOS (section 4) ── -->
@@ -597,13 +652,13 @@
     ══════════════════════════════════════════════ */
     const T = {
       en: {
-        'about-text':       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        'events-text':      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo. Duis aute irure dolor in reprehenderit.',
+        'about-text':       '<em>We The People</em> is an exhibit that centers the voices, stories, and creative expressions of the people who have too often been left out of the American narrative. As we approach the 250th anniversary of this nation, we ask, who gets to tell the story of America?<br><br>This exhibit explores the past, present, and future of our democracy through the lens of grassroots organizing, art, culture, and community power. From South Los Angeles to movements across the country, <em>We The People</em> reminds us that history is not only written by those in power. It is shaped every day by ordinary people fighting for justice, dignity, and freedom.',
+        'events-text':      'The exhibition extends beyond the gallery through a robust series of daily programming. Join us for panel conversations, screenings, workshops, performances, artist talks, and guided walkthroughs designed to deepen engagement with the themes of <em>We The People</em>. Click below to follow our schedule, updated regularly.',
         'events-cta':       'View All Events ↗',
         'hloc':             'At LADC Studios',
         'hero-instagram':   '@wethepeoplesouthla',
         'footer-presented': 'Presented by',
-        'footer-dates':     'July 2–19, 2026<br>Open Thursdays–Sundays<br>Free',
+        'footer-dates':     'July 2–19, 2026<br>Thu–Fri 1pm–9pm<br>Sat 11am–9pm<br>Sun 11am–7pm<br>Free',
         'footer-instagram': '@wethepeoplesouthla ↗',
         'footer-credit':    '© 2026 We The People Exhibition',
         'press-1-outlet':   'Lorem Ipsum Publication',
@@ -624,13 +679,13 @@
         'lang-toggle': 'ES',
       },
       es: {
-        'about-text':       'Lorem ipsum en español dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
-        'events-text':      'Lorem ipsum en español dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+        'about-text':       '<em>We The People</em> es una exhibición que pone en el centro las voces, las historias y las expresiones creativas de las personas que con demasiada frecuencia han quedado fuera de la narrativa de Estados Unidos. Al acercarnos al 250.º aniversario de esta nación, nos hacemos una pregunta fundamental: ¿Quién tiene el derecho de contar la historia de Estados Unidos?<br><br>Esta exhibición explora el pasado, el presente y el futuro de nuestra democracia a través de la organización comunitaria, el arte, la cultura y el poder de las comunidades. Desde el Sur de Los Ángeles hasta movimientos que han surgido en todo el país, <em>We The People</em> nos recuerda que la historia no está escrita únicamente por quienes ostentan el poder. La historia también se construye cada día gracias a personas comunes que luchan por la justicia, la dignidad y la libertad.',
+        'events-text':      'La exposición va más allá de la galería a través de una amplia programación diaria. Le invitamos a participar en paneles, proyecciones, talleres, presentaciones, charlas con artistas y recorridos guiados que exploran los temas de <em>We The People</em>. Haga clic en el enlace de abajo para ver nuestra programación, que se actualiza regularmente.',
         'events-cta':       'Ver Todos los Eventos ↗',
         'hloc':             'En LADC Studios',
         'hero-instagram':   '@wethepeoplesouthla',
         'footer-presented': 'Presentado por',
-        'footer-dates':     '2–19 de julio, 2026<br>Abierto Jueves–Domingos<br>Gratis',
+        'footer-dates':     '2–19 de julio, 2026<br>Jue–Vie 1pm–9pm<br>Sáb 11am–9pm<br>Dom 11am–7pm<br>Gratis',
         'footer-instagram': '@wethepeoplesouthla ↗',
         'footer-credit':    '© 2026 We The People Exhibition',
         'press-1-outlet':   'Lorem Ipsum Publicación',
