@@ -89,16 +89,20 @@
     }
 
     /* ── LANGUAGE TOGGLE ── */
-    #lang-toggle {
+    #lang-toggle-wrap {
       position: fixed; bottom: 20px; right: 20px; z-index: 999;
+      -webkit-transform: translateZ(0); transform: translateZ(0);
+      -webkit-backface-visibility: hidden; backface-visibility: hidden;
+      will-change: transform;
+    }
+    #lang-toggle {
+      display: block;
       background: #000; color: #fff; border: none;
       font-family: 'NHaasGrotesk', sans-serif;
       font-weight: 700; font-size: 12px;
       letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 10px 18px; cursor: pointer; transition: background 0.15s, color 0.15s;
-      -webkit-transform: translateZ(0); transform: translateZ(0);
-      -webkit-backface-visibility: hidden; backface-visibility: hidden;
-      will-change: transform;
+      padding: 10px 18px; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
     }
     #lang-toggle:hover { background: #faeb50; color: #000000; }
 
@@ -221,6 +225,8 @@
     #artists { padding: 120px 6vw; }
     .artists-flow { font-size: clamp(18px, 2.2vw, 30px); line-height: 1.75; max-width: 1100px; }
     .artist-sep { margin: 0 8px; }
+    .artist-link { color: inherit; text-decoration: none; transition: color 0.15s; }
+    .artists-flow span, .artists-flow a { white-space: nowrap; }
 
     /* ── PRESS ── */
     #press { padding: 120px 6vw; }
@@ -302,6 +308,15 @@
       color: #000000 !important;
       opacity: 1 !important;
     }
+    .footer-credit a { color: #000000 !important; text-decoration: underline; }
+
+    /* Hero hours */
+    .hero-hours {
+      font-family: 'NHaasGrotesk', sans-serif; font-weight: 700;
+      font-size: clamp(10px, 1vw, 13px);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      line-height: 1.9; margin-top: 8px;
+    }
 
     /* ── MOBILE ── */
     @media (max-width: 640px) {
@@ -350,7 +365,9 @@
 </head>
 <body>
 
-  <button id="lang-toggle">ES</button>
+  <div id="lang-toggle-wrap">
+    <button id="lang-toggle">ES</button>
+  </div>
 
   <!-- ── HERO (section 1) ── -->
   <section id="hero">
@@ -372,6 +389,7 @@
       <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
         <a class="hero-location" href="https://maps.app.goo.gl/MQTvvDd1P87K1Htz5" target="_blank" rel="noopener" id="hloc"></a>
         <a class="hero-location" href="https://instagram.com/wethepeoplesouthla" target="_blank" rel="noopener" id="hero-instagram"></a>
+        <div class="hero-hours" id="hero-hours"></div>
       </div>
     </div>
   </section>
@@ -389,7 +407,7 @@
   </section>
 
   <!-- ── PHOTOS (section 4) ── -->
-  <section id="photos">
+  <section id="photos" style="display:none">
     <div class="section-heading headline" id="photos-heading"></div>
     <div class="carousel-wrapper">
       <div class="carousel-track" id="carousel-track">
@@ -418,43 +436,47 @@
   <section id="artists">
     <div class="section-heading headline" id="artists-heading"></div>
     <div class="artists-flow">
-      <span>Adrian Armstrong</span><span class="artist-sep">/</span>
-      <span>Alicia Piller</span><span class="artist-sep">/</span>
-      <span>Anthony Akinbola</span><span class="artist-sep">/</span>
-      <span>Cash Cooper</span><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/adrianarmstrongart" target="_blank" rel="noopener">Adrian Armstrong</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/thereal.aliciapiller" target="_blank" rel="noopener">Alicia Piller</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/bmike2c" target="_blank" rel="noopener">Brandan Bmike Odums</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/coolcashcooper" target="_blank" rel="noopener">Cash Cooper</a><span class="artist-sep">/</span>
       <span>Danie Cansino</span><span class="artist-sep">/</span>
-      <span>Esteban Raheem Abdul Raheem Samayoa</span><span class="artist-sep">/</span>
-      <span>Ferrari Sheppard</span><span class="artist-sep">/</span>
-      <span>Genevieve Gaignard</span><span class="artist-sep">/</span>
-      <span>Glen Wilson</span><span class="artist-sep">/</span>
-      <span>Glen Hardy Jr.</span><span class="artist-sep">/</span>
-      <span>Greg Ito</span><span class="artist-sep">/</span>
-      <span>Hasef</span><span class="artist-sep">/</span>
-      <span>Hedy Torres</span><span class="artist-sep">/</span>
-      <span>Helina Metaferia</span><span class="artist-sep">/</span>
-      <span>HRDWRKR</span><span class="artist-sep">/</span>
-      <span>John Simmons</span><span class="artist-sep">/</span>
-      <span>Jonah Elijah</span><span class="artist-sep">/</span>
-      <span>Kayla B. Miller</span><span class="artist-sep">/</span>
-      <span>Keith Brown</span><span class="artist-sep">/</span>
-      <span>Kimberly Robertson (Mvskoke), Ph.D.</span><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/junndem" target="_blank" rel="noopener">Daniela Elizarraraz</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/dmiles1_apache" target="_blank" rel="noopener">Douglas Miles</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/ferrarisheppard" target="_blank" rel="noopener">Ferrari Sheppard</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/creativecurvyginger" target="_blank" rel="noopener">Genevieve Gaignard</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/dubarts" target="_blank" rel="noopener">Glen Wilson</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/glennardo" target="_blank" rel="noopener">Glenn Hardy Jr.</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/_hasef_" target="_blank" rel="noopener">Hasef</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/hedytorresart" target="_blank" rel="noopener">Hedy Torres</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/helina.metaferia" target="_blank" rel="noopener">Helina Metaferia</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/hrdwrker" target="_blank" rel="noopener">HRDWRKR</a><span class="artist-sep">/</span>
+      <span>Jill Knox</span><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/johnsimmonsasc" target="_blank" rel="noopener">John Simmons</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/jonah.elijah" target="_blank" rel="noopener">Jonah Elijah</a><span class="artist-sep">/</span>
+      <span>Jorge Davila</span><span class="artist-sep">/</span>
+      <span>Kate Deciccio</span><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/kb_arthouse" target="_blank" rel="noopener">Kayla B. Miller</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/kemicbrownart" target="_blank" rel="noopener">Keith Brown</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/kdrslaysthepatriarchy" target="_blank" rel="noopener">Kimberly Robertson (Mvskoke), Ph.D.</a><span class="artist-sep">/</span>
       <span>Kwame Braithwaite</span><span class="artist-sep">/</span>
-      <span>Kyungmi Shin</span><span class="artist-sep">/</span>
-      <span>Lex Marie</span><span class="artist-sep">/</span>
-      <span>Malaika Jules</span><span class="artist-sep">/</span>
-      <span>Mohammed Mubarak</span><span class="artist-sep">/</span>
-      <span>Patrick Martinez</span><span class="artist-sep">/</span>
-      <span>Patrisse Cullors</span><span class="artist-sep">/</span>
-      <span>Perez Brothers</span><span class="artist-sep">/</span>
-      <span>Raven Varona</span><span class="artist-sep">/</span>
-      <span>Sam Pace</span><span class="artist-sep">/</span>
-      <span>Teresa Flores</span><span class="artist-sep">/</span>
-      <span>Terrick Gutierrez</span>
+      <a class="artist-link" href="https://instagram.com/thelexmarie" target="_blank" rel="noopener">Lex Marie</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/malaikajules" target="_blank" rel="noopener">Malaika Jules</a><span class="artist-sep">/</span>
+      <span>Marika Shishido Dato</span><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/qmubarak06" target="_blank" rel="noopener">Mohammed Mubarak</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/patrick_martinez_studio" target="_blank" rel="noopener">Patrick Martinez</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/osopepatrisse" target="_blank" rel="noopener">Patrisse Cullors</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/ravieb" target="_blank" rel="noopener">Raven Varona</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/ringochiu" target="_blank" rel="noopener">Ringo Chiu</a><span class="artist-sep">/</span>
+      <span>River Garza</span><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/sam.pace.7" target="_blank" rel="noopener">Sam Pace</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/teresamanuelaflores" target="_blank" rel="noopener">Teresa Flores</a><span class="artist-sep">/</span>
+      <a class="artist-link" href="https://instagram.com/terrick03" target="_blank" rel="noopener">Terrick Gutierrez</a>
     </div>
   </section>
 
   <!-- ── PRESS (section 6) ── -->
-  <section id="press">
+  <section id="press" style="display:none">
     <div class="section-heading headline" id="press-heading"></div>
     <div class="press-list">
       <a class="press-item" href="#" target="_blank" rel="noopener">
@@ -503,7 +525,7 @@
       <div class="footer-dates" id="footer-dates"></div>
       <a class="social-link" href="https://instagram.com/wethepeoplesouthla" target="_blank" rel="noopener" id="footer-instagram"></a>
     </div>
-    <p class="footer-credit" id="footer-credit"></p>
+    <p class="footer-credit"><span id="footer-credit"></span><br>Site design by <a href="https://instagram.com/oldthingsnewplaces" target="_blank" rel="noopener">Asad Pervaiz</a></p>
   </section>
 
 
@@ -539,24 +561,27 @@
     }
 
     function applyColors() {
-      const heroBg   = randFrom(HF_COLORS);
-      const footerBg = pickExcluding(HF_COLORS, heroBg);
+      const usedBgs = new Set();
+
+      const heroBg = randFrom(HF_COLORS);
+      usedBgs.add(heroBg);
+      const footerBg = pickExcluding(HF_COLORS, ...usedBgs);
+      usedBgs.add(footerBg);
 
       document.getElementById('hero').style.backgroundColor   = heroBg;
       document.getElementById('hero').style.color             = '#000000';
       document.getElementById('footer').style.backgroundColor = footerBg;
       document.getElementById('footer').style.color           = '#000000';
 
-      const midIds = ['about','events','photos','artists','press'];
+      const midIds = ['about','events','artists'];
       const midBgs = [];
 
       midIds.forEach((id, i) => {
-        const prevBg = i === 0 ? heroBg : midBgs[i - 1];
         const nextBg = i === midIds.length - 1 ? footerBg : null;
-        const bg = nextBg
-          ? pickExcluding(MID_BG_POOL, prevBg, nextBg)
-          : pickExcluding(MID_BG_POOL, prevBg);
+        const excludeArgs = nextBg ? [...usedBgs, nextBg] : [...usedBgs];
+        const bg = pickExcluding(MID_BG_POOL, ...excludeArgs);
         midBgs.push(bg);
+        usedBgs.add(bg);
 
         const fgOptions  = MID_PALETTE[bg];
         const fg         = randFrom(fgOptions);
@@ -658,9 +683,10 @@
         'hloc':             'At LADC Studios',
         'hero-instagram':   '@wethepeoplesouthla',
         'footer-presented': 'Presented by',
-        'footer-dates':     'July 2–19, 2026<br>Thu–Fri 1pm–9pm<br>Sat 11am–9pm<br>Sun 11am–7pm<br>Free',
+        'footer-dates':     'July 2–19, 2026<br>Thu–Fri 1pm–9pm<br>Sat 11am–9pm<br>Sun 11am–7pm<br>Closed Sat July 4th<br>Free',
         'footer-instagram': '@wethepeoplesouthla ↗',
         'footer-credit':    '© 2026 We The People Exhibition',
+        'hero-hours':       'Thu &amp; Fri 1pm–9pm&nbsp;&nbsp;·&nbsp;&nbsp;Sat 11am–9pm&nbsp;&nbsp;·&nbsp;&nbsp;Sun 11am–7pm&nbsp;&nbsp;·&nbsp;&nbsp;Closed Sat July 4th',
         'press-1-outlet':   'Lorem Ipsum Publication',
         'press-1-headline': '"Lorem ipsum dolor sit amet, consectetur adipiscing elit"',
         'press-2-outlet':   'Dolor Sit Magazine',
@@ -674,8 +700,8 @@
         'ht1':    'An Exhibit at the Intersection',
         'ht2':    'of Art, Memory, and Movement',
         'hdates1':'July 2nd–19th',
-        'hdates2':'Thursdays through Sundays',
-        'hfree':  'Free and Open to the People',
+        'hdates2':'Free and Open to the People',
+        'hfree':  'Thursdays through Sundays',
         'lang-toggle': 'ES',
       },
       es: {
@@ -685,9 +711,10 @@
         'hloc':             'En LADC Studios',
         'hero-instagram':   '@wethepeoplesouthla',
         'footer-presented': 'Presentado por',
-        'footer-dates':     '2–19 de julio, 2026<br>Jue–Vie 1pm–9pm<br>Sáb 11am–9pm<br>Dom 11am–7pm<br>Gratis',
+        'footer-dates':     '2–19 de julio, 2026<br>Jue–Vie 1pm–9pm<br>Sáb 11am–9pm<br>Dom 11am–7pm<br>Cerrado Sáb 4 de julio<br>Gratis',
         'footer-instagram': '@wethepeoplesouthla ↗',
         'footer-credit':    '© 2026 We The People Exhibition',
+        'hero-hours':       'Jue &amp; Vie 1pm–9pm&nbsp;&nbsp;·&nbsp;&nbsp;Sáb 11am–9pm&nbsp;&nbsp;·&nbsp;&nbsp;Dom 11am–7pm&nbsp;&nbsp;·&nbsp;&nbsp;Cerrado Sáb 4 de Julio',
         'press-1-outlet':   'Lorem Ipsum Publicación',
         'press-1-headline': '"Lorem ipsum dolor sit amet, consectetur adipiscing elit"',
         'press-2-outlet':   'Dolor Sit Revista',
@@ -701,15 +728,15 @@
         'ht1':    'Una Exposición en la Intersección',
         'ht2':    'del Arte, la Memoria y el Movimiento',
         'hdates1':'2–19 de Julio',
-        'hdates2':'Jueves a Domingos',
-        'hfree':  'Gratuito y Abierto al Pueblo',
+        'hdates2':'Gratuito y Abierto al Pueblo',
+        'hfree':  'Jueves a Domingos',
         'lang-toggle': 'EN',
       }
     };
 
     const HEADLINE_IDS  = ['events-heading','photos-heading','artists-heading','press-heading'];
     const LIBERATOR_IDS = ['ht1','ht2','hdates1','hdates2','hfree'];
-    const PLAIN_IDS     = ['about-text','events-text','events-cta','hloc','hero-instagram','footer-presented','footer-dates','footer-instagram','footer-credit','press-1-outlet','press-1-headline','press-2-outlet','press-2-headline','press-3-outlet','press-3-headline','lang-toggle'];
+    const PLAIN_IDS     = ['about-text','events-text','events-cta','hloc','hero-instagram','hero-hours','footer-presented','footer-dates','footer-instagram','footer-credit','press-1-outlet','press-1-headline','press-2-outlet','press-2-headline','press-3-outlet','press-3-headline','lang-toggle'];
 
     let lang = 'en';
 
